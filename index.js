@@ -24,7 +24,7 @@ etho.forEach = function(obj, iterator, context) {
   }
 };
 
-etho.x = function ethoX(parent, child){
+etho.x = function ethoX(className, parent, child){
 
   if(!child){
     child = parent;
@@ -47,6 +47,17 @@ etho.x = function ethoX(parent, child){
     child.prototype.constructor = child;
     child.prototype.parent = parent;
   }
+
+  child.prototype.meta = {};
+
+  if(typeof className !== 'string'){
+    etho.forEach(className, function(value, key, list){
+      child.prototype.meta[key] = value;
+    });
+  } else {
+    child.prototype.meta.name = className;
+  }
+
   return function prototypeEnrichment(newMethods){
     etho.forEach(newMethods, function(value, key, list){
       child.prototype[key] = value;
@@ -56,15 +67,27 @@ etho.x = function ethoX(parent, child){
 }
 
 
-var Foo = etho.x(function Foo(){
+var Foo = etho.x({
+  name: 'Foo',
+  version: '0.1'
+}, function Foo(){
+  console.log(this.meta.name, ' constructor !');
+  console.log(this.meta);
+  return this.init();
 })({
+  'init': function init(){
+    console.log(this.meta.name + 'Init !');
+  },
   'baz' : function baz(arg){
-    console.log('Foo:baz this', this);
-    return 'Foo ' + arg + ' Baz'
+    console.log(this.meta.name + ':baz this', this);
+    return this.meta.name + ' ' + arg + ' Baz'
   }
 });
 
-var Bar = etho.x(Foo, function Bar(){
+var Bar = etho.x('Bar', Foo, function Bar(){
+  console.log(this.meta.name, ' constructor !');
+  console.log(this.meta);
+  this.parentMethod('init')();
 })({
   'baz' : function baz(){
     return 'Wrapped ' + this.parentMethod('baz')('Bob') + ' Up';
