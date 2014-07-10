@@ -70,30 +70,31 @@ etho.x = function ethoX(className, parent, child){
 var Foo = etho.x({
   name: 'Foo',
   version: '0.1'
-}, function Foo(){
+}, function Foo(value){
   console.log(this.meta.name, ' constructor !');
   console.log(this.meta);
-  return this.init();
+  return this.init(value);
 })({
-  'init': function init(){
+  'init': function init(value){
+    this.value = value;
     console.log(this.meta.name + 'Init !');
   },
   'baz' : function baz(arg){
     console.log(this.meta.name + ':baz this', this);
-    return this.meta.name + ' ' + arg + ' Baz'
+    return this.meta.name + ' ' + arg + ' ' + this.value + ' Baz'
   }
 });
 
-var Bar = etho.x('Bar', Foo, function Bar(){
+var Bar = etho.x('Bar', Foo, function Bar(value){
   console.log(this.meta.name, ' constructor !');
   console.log(this.meta);
-  this.parentMethod('init')();
+  this.parentMethod('init')(value);
 })({
   'baz' : function baz(){
     return 'Wrapped ' + this.parentMethod('baz')('Bob') + ' Up';
   }
 });
 
-var bar = new Bar();
+var bar = new Bar('Value that passe everywhere !!!');
 
 console.log(bar.baz());
