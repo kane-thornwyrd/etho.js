@@ -1,4 +1,3 @@
-define('etho', [], function(){
 
   var etho = {};
 
@@ -68,9 +67,6 @@ define('etho', [], function(){
     };
   };
 
-  return etho;
-
-});
 
 
 var Foo = etho.x({
