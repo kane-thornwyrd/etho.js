@@ -1,0 +1,35 @@
+{
+  "name": "etho.js",
+  "description": "My toolbox, forged to fit my needs, reading the jsjutsu's gurus papers.",
+  "version": "0.0.1",
+  "keywords": [],
+  "author": {
+    "name": "Jean-cédric THEROND",
+    "email": "jean.cedric.t@gmail.com"
+  },
+  "contributors": [],
+  "maintainers": [],
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/kane-thornwyrd/etho.js",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/kane-thornwyrd/etho.js.git"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/kane-thornwyrd/etho.js/issues"
+  },
+  "licenses": [
+    {
+      "type": "GPL v3+",
+      "url": "https://gnu.org/licenses/gpl.html"
+    }
+  ],
+  "engines": {
+    "node" : "> 0.10.0",
+    "webkit" : "*"
+  }
+}
