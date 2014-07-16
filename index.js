@@ -1,3 +1,17 @@
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['exports'], function (exports) {
+            return factory((root.commonJsStrictGlobal = exports));
+        });
+    } else if (typeof exports === 'object') {
+        // CommonJS
+        factory(exports);
+    } else {
+        // Browser globals
+        factory((root.commonJsStrictGlobal = {}));
+    }
+}(this, function (exports) {
 
   var etho = {};
 
@@ -68,7 +82,7 @@
   };
 
 
-
+/*
 var Foo = etho.x({
   name: 'Foo',
   version: '0.1'
@@ -100,3 +114,6 @@ var Bar = etho.x('Bar', Foo, function Bar(value){
 var bar = new Bar('Value that passe everywhere !!!');
 
 console.log(bar.baz());
+*/
+  exports.etho = etho;
+}));
