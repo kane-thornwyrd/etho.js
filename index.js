@@ -116,4 +116,5 @@ var bar = new Bar('Value that passe everywhere !!!');
 console.log(bar.baz());
 */
   exports.etho = etho;
+  return etho;
 }));
