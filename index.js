@@ -39,16 +39,17 @@
     }
   };
 
-  etho.x = function ethoX(className, parent, child){
+  etho.x = function ethoX(nameForNewClass, parent, child){
+    console.debug('Etho.x args', arguments);
 
     if(!child){
       child = parent;
-      parent = Object;
+      parent = {};
     }
 
     var parentMethod = function parentInvoke(method){
-      if(typeof this.parent[method] !== 'undefined'){
-        return this.parent[method].bind(this);
+      if(typeof parent[method] !== 'undefined'){
+        return parent[method].apply(this, Array.prototype.slice.call(arguments, 1));
       }
       return null;
     };
@@ -65,12 +66,12 @@
 
     child.prototype.meta = {};
 
-    if(typeof className !== 'string'){
-      etho.forEach(className, function(value, key, list){
+    if(typeof nameForNewClass !== 'string'){
+      etho.forEach(nameForNewClass, function(value, key, list){
         child.prototype.meta[key] = value;
       });
     } else {
-      child.prototype.meta.name = className;
+      child.prototype.meta.name = nameForNewClass;
     }
 
     return function prototypeEnrichment(newMethods){
