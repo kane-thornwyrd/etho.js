@@ -47,6 +47,14 @@
       parent = {};
     }
 
+    if(typeof child !== 'function'){
+      child = function(el, options){
+        this.el = el;
+        this.options = options;
+        console.debug(nameForNewClass +' autoconstructor', this.meta, arguments);
+      };
+    }
+
     var parentMethod = function parentInvoke(method){
       if(typeof parent[method] !== 'undefined'){
         return parent[method].apply(this, Array.prototype.slice.call(arguments, 1));

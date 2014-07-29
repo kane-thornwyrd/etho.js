@@ -1,7 +1,7 @@
 {
   "name": "etho.js",
   "description": "My toolbox, forged to fit my needs, reading the jsjutsu's gurus papers.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "keywords": [],
   "author": {
     "name": "Jean-cédric THEROND",
@@ -19,10 +19,6 @@
       "url": "https://github.com/kane-thornwyrd/etho.js.git"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kane-thornwyrd/etho.js.git"
-  },
   "bugs": {
     "url": "https://github.com/kane-thornwyrd/etho.js/issues"
   },
@@ -33,7 +29,13 @@
     }
   ],
   "engines": {
-    "node" : "> 0.10.0",
-    "webkit" : "*"
+    "node": "> 0.10.0",
+    "webkit": "*"
+  },
+  "readme": "etho.js\n=======\n\nMy toolbox, forged to fit my needs, reading the jsjutsu's gurus papers.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kane-thornwyrd/etho.js.git"
   }
 }
