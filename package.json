@@ -10,7 +10,9 @@
   "contributors": [],
   "maintainers": [],
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "underscore": "1.7.0"
+  },
   "devDependencies": {},
   "homepage": "https://github.com/kane-thornwyrd/etho.js",
   "repositories": [

@@ -1,29 +1,28 @@
 (function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['exports'], function (exports) {
-            return factory((root.commonJsStrictGlobal = exports));
-        });
-    } else if (typeof exports === 'object') {
-        // CommonJS
-        factory(exports);
-    } else {
-        // Browser globals
-        factory((root.commonJsStrictGlobal = {}));
-    }
-}(this, function (exports) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['underscore'], function (_) {
+        return factory(_);
+    });
+  } else {
+    // Browser globals
+    factory(_);
+  }
+}(this, function (_) {
 
   var etho = {};
 
-  etho.instanceOf = function instanceOf(_obj, ancestor) {
-    while (_obj != null) { if (_obj == ancestor.prototype){ return true; }
-      _obj = _obj.__proto__;
-    }
-    return false;
-  }
+  etho.ucfirst = function(str){
+    return str.substr(0,1).toUpperCase() + str.substr(1);
+  };
+
+  etho.isA = function(type, obj){
+    return Object.prototype.toString.call(obj) === '[object ' + etho.ucfirst(type) + ']';
+  };
 
   etho.forEach = function(obj, iterator, context) {
-    if (obj == null){ return;}
+    if (obj === null){ return;}
+    if(typeof context === 'undefined'){ context = this; }
     if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
       obj.forEach(iterator, context);
     } else if (obj.length === +obj.length) {
@@ -39,19 +38,56 @@
     }
   };
 
-  etho.x = function ethoX(nameForNewClass, parent, child){
-    console.debug('Etho.x args', arguments);
+  etho.merge = function ethoMerge(target, seed/*, seed*… */){
+    var _return = _.clone(target);
+    if(_.isUndefined(seed)){ return _return; }
+    var args = _.toArray(arguments).slice(1);
+    for (var i = 0; i < args.length; i++) {
+      var src = args[i];
+      for (var prop in _return) {
+        if (
+          _return.hasOwnProperty(prop) &&
+          !_.isFunction(_return[prop]) &&
+          typeof _return[prop] === typeof src[prop]
+        ){
+          // J'utilise la représentation textuelle et pas typeof pour conserver
+          // l'homogénéïté des tests puisque typeof [] est "object"
+          switch(Object.prototype.toString.call(_return[prop])){
+            case '[object Array]':
+            case '[object Object]':
+              etho.merge(_return[prop], src[prop]);
+            break;
+            case '[object Undefined]':
+              continue;
+            break;
+            default:
+              _return[prop] = src[prop];
+          };
+        } else { continue; }
+      }
+    }
+    return _return;
+  };
 
-    if(!child){
+  etho.x = function ethoX(nameForNewClass, parent, child){
+    // console.debug('Etho.x args', arguments);
+
+    if(_.isUndefined(child)){
       child = parent;
       parent = {};
     }
 
-    if(typeof child !== 'function'){
-      child = function(el, options){
-        this.el = el;
-        this.options = options;
-        console.debug(nameForNewClass +' autoconstructor', this.meta, arguments);
+    if(!etho.isA('function',child)){
+      child = function(options){
+        if(this.defaultOptions){
+          this.options = etho.merge(this.defaultOptions, options);
+        }else{
+          this.options = options;
+        }
+        // console.debug('Etho autoconstructor ', this, arguments);
+        if( this.init ){ this.init(); }
+        if( this.listen ){ this.listen(); }
+        return this;
       };
     }
 
@@ -72,14 +108,16 @@
       child.prototype.parent = parent;
     }
 
-    child.prototype.meta = {};
+    child.prototype.meta = {
+      name: '',
+      version: ''
+    };
 
-    if(typeof nameForNewClass !== 'string'){
-      etho.forEach(nameForNewClass, function(value, key, list){
-        child.prototype.meta[key] = value;
-      });
+    if(!etho.isA('string', nameForNewClass)){
+      child.prototype.meta = etho.merge(child.prototype.meta, nameForNewClass);
     } else {
-      child.prototype.meta.name = nameForNewClass;
+      child.prototype.meta['name'] = nameForNewClass;
+      child.prototype.meta['version'] = '0.0.1-dev';
     }
 
     return function prototypeEnrichment(newMethods){
@@ -124,6 +162,6 @@ var bar = new Bar('Value that passe everywhere !!!');
 
 console.log(bar.baz());
 */
-  exports.etho = etho;
+
   return etho;
 }));
