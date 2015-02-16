@@ -1,9 +1,13 @@
+/*global _*/
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['underscore'], function (_) {
         return factory(_);
     });
+  } else if(typeof exports !== 'undefined'){
+    var _ = require('underscore');
+    exports = module.exports = factory(_);
   } else {
     // Browser globals
     factory(_);
@@ -59,10 +63,9 @@
             break;
             case '[object Undefined]':
               continue;
-            break;
             default:
               _return[prop] = src[prop];
-          };
+          }
         } else { continue; }
       }
     }
