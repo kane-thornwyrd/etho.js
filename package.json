@@ -8,8 +8,8 @@
     "email": "jean.cedric.t@gmail.com"
   },
   "scripts": {
-      "test": "mocha --compilers coffee:coffee-script/register"
-    },
+    "test": "mocha --compilers coffee:coffee-script/register"
+  },
   "contributors": [],
   "maintainers": [],
   "main": "index.js",

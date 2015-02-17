@@ -54,12 +54,9 @@
           !_.isFunction(_return[prop]) &&
           typeof _return[prop] === typeof src[prop]
         ){
-          // J'utilise la représentation textuelle et pas typeof pour conserver
-          // l'homogénéïté des tests puisque typeof [] est "object"
           switch(Object.prototype.toString.call(_return[prop])){
-            case '[object Array]':
             case '[object Object]':
-              etho.merge(_return[prop], src[prop]);
+              _return[prop] = etho.merge(_return[prop], src[prop]);
             break;
             case '[object Undefined]':
               continue;
