@@ -8,8 +8,6 @@ load = (thing)=> inside thing, we require thing
 
 inside '_', we require 'underscore'
 
-load 'blanket'
-
 inside 'etho', we require '../index'
 
 load('chai').should()
