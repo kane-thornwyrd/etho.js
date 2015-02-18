@@ -119,13 +119,20 @@ describe 'merge',->
 
 describe 'x',->
 
-  minimalClassArguments = ['TestMinimalClass']
+  minimalClassName = 'TestMinimalClass'
   minimalClassPrototype =
-    test : (@attr)->
-      'test'
+    test : (@attr)-> 'test'
+    baz : ()-> 'child'
+    father : (val)->
+  ancestorClassName = 'TestAncestorClass'
+  ancestorClassPrototype =
+    foo: (@bar)->
+    baz: ()-> 'ancestor'
+    trans: (val)->
+      val
 
   it 'should return a function that serve to populate the prototype of a new Class',->
-    outAssembler = etho.x.apply(outAssembler, minimalClassArguments)
+    outAssembler = etho.x(minimalClassName)
     outAssembler.should.be.a 'function'
     outClass = outAssembler minimalClassPrototype
     newObject = new outClass()
@@ -134,8 +141,18 @@ describe 'x',->
     newObject.attr.should.be.equal 'ergo sum'
 
   it 'should give the new Class a meta attribute containing at least his name',->
-    outClass = etho.x.apply(outClass, minimalClassArguments) minimalClassPrototype
+    outClass = etho.x(minimalClassName) minimalClassPrototype
     newObject = new outClass
+    newObject.should.be.an.instanceof outClass
+    newObject.should.have.property 'meta'
+    newObject.meta.name.should.be.equal 'TestMinimalClass'
+
+  it 'should allow to specify an ancestor class',->
+    ancestorClass = etho.x(ancestorClassName) ancestorClassPrototype
+    childClass = etho.x(minimalClassName,new ancestorClass) minimalClassPrototype
+    newObject = new childClass
     newObject.should.have.property('meta')
     newObject.meta.name.should.be.equal 'TestMinimalClass'
+    newObject.parent.meta.name.should.not.be.equal 'TestMinimalClass'
+
 
