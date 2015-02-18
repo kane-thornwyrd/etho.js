@@ -69,15 +69,27 @@
     return _return;
   };
 
-  etho.x = function ethoX(nameForNewClass, parent, child){
-    // console.debug('Etho.x args', arguments);
+  etho.x = function ethoX(nameForNewClass /*, parent , child*/){
+    //console.log('Etho.x args', arguments);
 
-    if(_.isUndefined(child)){
-      child = parent;
-      parent = {};
+    var filter = function filter(val){
+      return etho.isA('Function',val) || (etho.isA('Object',val) && !_.isUndefined(val.meta));
     }
 
-    if(!etho.isA('function',child)){
+    var args = _.toArray(arguments).slice(1).filter(filter);
+
+    if(!!args.length){
+      var child = args.pop();
+      if(!_.isUndefined(child.meta)){
+        args.push(child);
+        child = undefined;
+      }
+
+      var parent = args.shift();
+    }
+
+    // If we don't have a proper constructor, give a rather minimalistic one !
+    if(_.isUndefined(child)){
       child = function(options){
         if(this.defaultOptions){
           this.options = etho.merge(this.defaultOptions, options);
@@ -91,21 +103,24 @@
       };
     }
 
-    var parentMethod = function parentInvoke(method){
-      if(typeof parent[method] !== 'undefined'){
-        return parent[method].apply(this, Array.prototype.slice.call(arguments, 1));
+    if(!_.isUndefined(parent)){
+      var parentMethod = function parentInvoke(method){
+        if(typeof parent[method] !== 'undefined'){
+          return parent[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        }
+        return null;
+      };
+
+      if ( parent.constructor == Function ){
+        child.prototype = new parent;
+        child.prototype.constructor = child;
+        child.prototype.parent = parent.prototype;
+        child.prototype.parent.parentMethod = parentMethod;
+      } else {
+        child.prototype = parent;
+        child.prototype.constructor = child;
+        child.prototype.parent = parent;
       }
-      return null;
-    };
-    if ( parent.constructor == Function ){
-      child.prototype = new parent;
-      child.prototype.constructor = child;
-      child.prototype.parent = parent.prototype;
-      child.prototype.parent.parentMethod = parentMethod;
-    } else {
-      child.prototype = parent;
-      child.prototype.constructor = child;
-      child.prototype.parent = parent;
     }
 
     child.prototype.meta = {
