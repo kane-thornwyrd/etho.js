@@ -1,9 +1,10 @@
 language: node_js
 node_js:
   - "0.11.14"
-before_script: 'npm install -g istanbul && npm install -g mocha'
-addons:
-  code_climate:
-    repo_token: 55090f5de30ba02246001547
+install:
+- npm install
+- npm install -g istanbul
+- npm install -g mocha
+script: npm test
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
