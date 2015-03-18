@@ -122,7 +122,6 @@
         child.prototype.constructor = child;
         child.prototype.parent = parent;
       }
-        console.log('CHILD: ', parent.constructor);
     }
 
     child.prototype.meta = {
@@ -144,41 +143,6 @@
       return child;
     };
   };
-
-
-/*
-var Foo = etho.x({
-  name: 'Foo',
-  version: '0.1'
-}, function Foo(value){
-  console.log(this.meta.name, ' constructor !');
-  console.log(this.meta);
-  return this.init(value);
-})({
-  'init': function init(value){
-    this.value = value;
-    console.log(this.meta.name + 'Init !');
-  },
-  'baz' : function baz(arg){
-    console.log(this.meta.name + ':baz this', this);
-    return this.meta.name + ' ' + arg + ' ' + this.value + ' Baz'
-  }
-});
-
-var Bar = etho.x('Bar', Foo, function Bar(value){
-  console.log(this.meta.name, ' constructor !');
-  console.log(this.meta);
-  this.parentMethod('init')(value);
-})({
-  'baz' : function baz(){
-    return 'Wrapped ' + this.parentMethod('baz')('Bob') + ' Up';
-  }
-});
-
-var bar = new Bar('Value that passe everywhere !!!');
-
-console.log(bar.baz());
-*/
 
   return etho;
 }));

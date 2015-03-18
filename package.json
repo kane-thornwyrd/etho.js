@@ -8,7 +8,7 @@
     "email": "jean.cedric.t@gmail.com"
   },
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register"
+    "test": "istanbul cover _mocha -- --compilers coffee:coffee-script/register --reporter spec test"
   },
   "contributors": [],
   "maintainers": [],
@@ -18,8 +18,9 @@
   },
   "devDependencies": {
     "chai": "^2.0.0",
-    "codeclimate-test-reporter": "0.0.4",
     "coffee-script": "^1.9.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.8",
     "mocha": "^2.1.0"
   },
   "homepage": "https://github.com/kane-thornwyrd/etho.js",
