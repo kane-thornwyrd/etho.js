@@ -14,7 +14,7 @@
   "maintainers": [],
   "main": "index.js",
   "dependencies": {
-    "underscore": "1.7.0"
+    "underscore": "1.*"
   },
   "devDependencies": {
     "chai": "^2.0.0",
