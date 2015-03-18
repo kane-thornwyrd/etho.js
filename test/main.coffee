@@ -149,10 +149,11 @@ describe 'x',->
 
   it 'should allow to specify an ancestor class',->
     ancestorClass = etho.x(ancestorClassName) ancestorClassPrototype
-    childClass = etho.x(minimalClassName,new ancestorClass) minimalClassPrototype
+    childClass = etho.x(minimalClassName,new ancestorClass()) minimalClassPrototype
     newObject = new childClass
-    newObject.should.have.property('meta')
-    newObject.meta.name.should.be.equal 'TestMinimalClass'
-    newObject.parent.meta.name.should.not.be.equal 'TestMinimalClass'
+    newObject.should.have.property 'meta'
+    newObject.meta.name.should.be.equal minimalClassName
+    newObject.parent.should
+    newObject.parent.meta.name.should.not.be.equal minimalClassName
 
 

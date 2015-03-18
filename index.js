@@ -71,21 +71,22 @@
 
   etho.x = function ethoX(nameForNewClass /*, parent , child*/){
     //console.log('Etho.x args', arguments);
+    var parent, child;
 
     var filter = function filter(val){
       return etho.isA('Function',val) || (etho.isA('Object',val) && !_.isUndefined(val.meta));
-    }
+    };
 
     var args = _.toArray(arguments).slice(1).filter(filter);
 
     if(!!args.length){
-      var child = args.pop();
+      child = args.pop();
       if(!_.isUndefined(child.meta)){
         args.push(child);
         child = undefined;
       }
 
-      var parent = args.shift();
+      parent = args.shift();
     }
 
     // If we don't have a proper constructor, give a rather minimalistic one !
@@ -111,16 +112,17 @@
         return null;
       };
 
-      if ( parent.constructor == Function ){
-        child.prototype = new parent;
+      if ( typeof parent.constructor === 'function' ){
+        child.prototype = parent;
         child.prototype.constructor = child;
         child.prototype.parent = parent.prototype;
-        child.prototype.parent.parentMethod = parentMethod;
+        child.prototype.parentMethod = parentMethod;
       } else {
         child.prototype = parent;
         child.prototype.constructor = child;
         child.prototype.parent = parent;
       }
+        console.log('CHILD: ', parent.constructor);
     }
 
     child.prototype.meta = {
@@ -131,8 +133,8 @@
     if(!etho.isA('string', nameForNewClass)){
       child.prototype.meta = etho.merge(child.prototype.meta, nameForNewClass);
     } else {
-      child.prototype.meta['name'] = nameForNewClass;
-      child.prototype.meta['version'] = '0.0.1-dev';
+      child.prototype.meta.name = nameForNewClass;
+      child.prototype.meta.version = '0.0.1-dev';
     }
 
     return function prototypeEnrichment(newMethods){
