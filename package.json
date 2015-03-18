@@ -8,7 +8,7 @@
     "email": "jean.cedric.t@gmail.com"
   },
   "scripts": {
-    "test": "istanbul cover _mocha -- --compilers coffee:coffee-script/register --reporter spec test"
+    "test": "istanbul cover --hook-run-in-context node_modules/mocha/bin/_mocha -- --compilers coffee:coffee-script/register --reporter spec test"
   },
   "contributors": [],
   "maintainers": [],
