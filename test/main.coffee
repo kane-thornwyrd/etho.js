@@ -119,17 +119,17 @@ describe 'merge',->
 
 describe 'x',->
 
-  minimalClassName = 'TestMinimalClass'
-  minimalClassPrototype =
-    test : (@attr)-> 'test'
-    baz : ()-> 'child'
-    father : (val)->
   ancestorClassName = 'TestAncestorClass'
   ancestorClassPrototype =
     foo: (@bar)->
     baz: ()-> 'ancestor'
-    trans: (val)->
-      val
+    father : (val)-> "father:#{val}"
+
+  minimalClassName = 'TestMinimalClass'
+  minimalClassPrototype =
+    test : (@attr)-> 'test'
+    baz : ()-> 'child'
+    trans: (val)-> "child:#{@parentMethod 'father', val}:child"
 
   it 'should return a function that serve to populate the prototype of a new Class',->
     outAssembler = etho.x(minimalClassName)
@@ -142,18 +142,28 @@ describe 'x',->
 
   it 'should give the new Class a meta attribute containing at least his name',->
     outClass = etho.x(minimalClassName) minimalClassPrototype
-    newObject = new outClass
+    newObject = new outClass()
     newObject.should.be.an.instanceof outClass
     newObject.should.have.property 'meta'
     newObject.meta.name.should.be.equal 'TestMinimalClass'
 
   it 'should allow to specify an ancestor class',->
-    ancestorClass = etho.x(ancestorClassName) ancestorClassPrototype
-    childClass = etho.x(minimalClassName,new ancestorClass()) minimalClassPrototype
-    newObject = new childClass
-    newObject.should.have.property 'meta'
+    ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
+    childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
+    newObject = new childClass()
+    newObject.prototype.should.have.property 'meta'
     newObject.meta.name.should.be.equal minimalClassName
-    newObject.parent.should
     newObject.parent.meta.name.should.not.be.equal minimalClassName
 
+  it 'should allow the new Class to call specific method from his ancestor',->
+    ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
+    childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
+    newObject = new childClass()
+    newObject.trans('test').should.be.equal 'child:father:test:child'
+
+  it 'should allow to call a method from the ancestor class, even if it hasn\'t been re-implemented', ->
+    ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
+    childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
+    newObject = new childClass()
+    newObject.father('test').should.be.equal 'father:test'
 
