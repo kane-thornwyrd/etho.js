@@ -14,6 +14,28 @@
   }
 }(this, function (_) {
 
+  //http://javascript.crockford.com/prototypal.html
+  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+  // It's not a good polyfill, miss the properties parameter
+  // TODO EVOLVE
+  if (typeof Object.create != 'function') {
+    Object.create = (function() {
+      var Temp = function() {};
+      return function (prototype) {
+        if (arguments.length > 1) {
+          throw Error('Second argument not supported');
+        }
+        if (typeof prototype != 'object') {
+          throw TypeError('Argument must be an object');
+        }
+        Temp.prototype = prototype;
+        var result = new Temp();
+        Temp.prototype = null;
+        return result;
+      };
+    })();
+  }
+
   var etho = {};
 
   etho.ucfirst = function(str){
@@ -69,80 +91,118 @@
     return _return;
   };
 
-  etho.x = function ethoX(nameForNewClass /*, parent , child*/){
-    //console.log('Etho.x args', arguments);
-    var parent, child;
+  etho.x = function ethoX(nameForNewClass /*, parentClass , customConstructor*/){
 
-    var filter = function filter(val){
-      return etho.isA('Function',val) || (etho.isA('Object',val) && !_.isUndefined(val.meta));
-    };
 
-    var args = _.toArray(arguments).slice(1).filter(filter);
-
-    if(!!args.length){
-      child = args.pop();
-      if(!_.isUndefined(child.meta)){
-        args.push(child);
-        child = undefined;
-      }
-
-      parent = args.shift();
-    }
-
-    // If we don't have a proper constructor, give a rather minimalistic one !
-    if(_.isUndefined(child)){
-      child = function(options){
-        if(this.defaultOptions){
-          this.options = etho.merge(this.defaultOptions, options);
-        }else{
-          this.options = options;
-        }
-        // console.debug('Etho autoconstructor ', this, arguments);
-        if( this.init ){ this.init(); }
-        if( this.listen ){ this.listen(); }
-        return this;
-      };
-    }
-
-    if(!_.isUndefined(parent)){
-      var parentMethod = function parentInvoke(method){
-        if(typeof parent[method] !== 'undefined'){
-          return parent[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        }
-        return null;
-      };
-
-      if ( typeof parent.constructor === 'function' ){
-        child.prototype = parent;
-        child.prototype.constructor = child;
-        child.prototype.parent = parent.prototype;
-        child.prototype.parentMethod = parentMethod;
-      } else {
-        child.prototype = parent;
-        child.prototype.constructor = child;
-        child.prototype.parent = parent;
-      }
-    }
-
-    child.prototype.meta = {
-      name: '',
-      version: ''
-    };
+    var
+      baseMeta = {
+        name    : '',
+        version : '0.0.1-dev'
+      },
+      product = {},
+      _inheritance = false
+    ;
 
     if(!etho.isA('string', nameForNewClass)){
-      child.prototype.meta = etho.merge(child.prototype.meta, nameForNewClass);
+      nameForNewClass = etho.merge(baseMeta, nameForNewClass );
     } else {
-      child.prototype.meta.name = nameForNewClass;
-      child.prototype.meta.version = '0.0.1-dev';
+      nameForNewClass = etho.merge(baseMeta, {
+        name : nameForNewClass
+      });
     }
 
-    return function prototypeEnrichment(newMethods){
-      etho.forEach(newMethods, function(value, key, list){
-        child.prototype[key] = value;
-      });
-      return child;
+    var args = _.toArray(arguments);
+
+    switch(args.length){
+      case 1:
+        _minimal.apply(this, args);
+      break;
+      case 2:
+        _customConstructor.apply(this, args);
+      break;
+      case 3:
+        _fullFledged.apply(this, args);
+      break;
+      default:
+        throw new Error('Wrong arguments in etho.x !');
+    }
+
+
+
+    function parentInvoke(method){
+      if(typeof this.parent[method] !== 'undefined'){
+        return this.parent[method].apply(this, _.toArray(arguments).slice(1));
+      }
+      return null;
     };
+
+
+    function _minimal(nameForNewClass){
+      product = etho.x.minimalConstructor;
+      product.prototype.parent = {};
+      product.prototype.constructor = etho.x.minimalConstructor;
+      product.prototype.parentMethod = parentInvoke;
+
+    }
+
+
+    function _customConstructor(nameForNewClass, customConstructor){
+      product = customConstructor;
+      product.prototype.parent =  {};
+      product.prototype.constructor = customConstructor;
+      product.prototype.parentMethod = parentInvoke;
+    }
+
+
+    function _fullFledged(nameForNewClass, parentClass, customConstructor){
+      product = customConstructor;
+      var _t = Object.create(parentClass);
+      product.prototype = _t;
+      product.prototype.parent = parentClass.prototype;
+      product.prototype.constructor = customConstructor;
+      product.prototype.parentMethod = parentInvoke;
+    }
+
+
+    var prototypeEnrichment = function _prototypeEnrichment(newMethods){
+      for(var attr in newMethods){
+        if( newMethods.hasOwnProperty( attr ) && etho.isA('function', newMethods[attr])) {
+          product.prototype[attr] = newMethods[attr];
+        }
+      }
+
+      var _functionFilter = function(val, k, obj){return etho.isA('function',val);};
+
+      for(var meth in product.prototype.parent){
+        if(product.prototype.parent.hasOwnProperty(meth)){
+          if(typeof product.prototype[meth] === 'undefined'){
+            product.prototype[meth] = function autoInheritedMethod(){
+              console.log('PARENT METHOD', this);
+              return parentInvoke.apply(meth, _.toArray(arguments));
+            }
+          }
+        }
+      }
+      return product;
+    }
+    product.prototype.meta = nameForNewClass;
+
+
+
+
+    return prototypeEnrichment;
   };
+
+  etho.x.minimalConstructor = function ethoGenericConstructor(options){
+    if(this.defaultOptions){
+      this.options = etho.merge(this.defaultOptions, options);
+    }else{
+      this.options = options;
+    }
+    if( this.init ){ this.init(); }
+    if( this.listen ){ this.listen(); }
+    return this;
+  }
 
   return etho;
 }));

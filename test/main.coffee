@@ -6,6 +6,8 @@ inside = (what, from)=>
 we = (obj)-> obj
 load = (thing)=> inside thing, we require thing
 
+getARandomString = -> Math.random().toString(36).replace(/[^a-zA-Z]+/g, '')
+
 inside '_', we require 'underscore'
 
 inside 'etho', we require '../index'
@@ -15,7 +17,7 @@ load('chai').should()
 
 describe 'ucfirst', ->
 
-  _testStr = 'zdokzdjDZokdZO_dzdij-zdu'
+  _testStr = getARandomString()
   _oldChrCode = 0
   _newChrCode = 0
 
@@ -61,13 +63,13 @@ describe 'merge',->
 
   obj1 =
     foo : true
-    bar : 'okidoki'
+    bar : getARandomString()
     arr :
       pirate : false
-      color  : "black"
+      color  : getARandomString()
       limb   : [
-        'left',
-        'right'
+        getARandomString()
+        getARandomString()
       ]
     number : 1
 
@@ -77,14 +79,14 @@ describe 'merge',->
     foo : false
     baz : [
       42
-      "Obiwan Kenobi"
+      getARandomString()
       false
     ]
     arr :
       pirate : true
       color  : 34
       limb   : [
-        'left'
+        getARandomString()
       ]
     number: '1'
 
@@ -119,6 +121,8 @@ describe 'merge',->
 
 describe 'x',->
 
+  staticOutput = getARandomString()
+  testValue = getARandomString()
   ancestorClassName = 'TestAncestorClass'
   ancestorClassPrototype =
     foo: (@bar)->
@@ -127,43 +131,32 @@ describe 'x',->
 
   minimalClassName = 'TestMinimalClass'
   minimalClassPrototype =
-    test : (@attr)-> 'test'
+    test : (@attr)-> staticOutput
     baz : ()-> 'child'
     trans: (val)-> "child:#{@parentMethod 'father', val}:child"
 
+  ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
+  childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
+  newObject = new childClass()
+
   it 'should return a function that serve to populate the prototype of a new Class',->
-    outAssembler = etho.x(minimalClassName)
-    outAssembler.should.be.a 'function'
-    outClass = outAssembler minimalClassPrototype
-    newObject = new outClass()
     newObject.test.should.be.a 'function'
-    newObject.test('ergo sum').should.be.equal 'test'
-    newObject.attr.should.be.equal 'ergo sum'
+    newObject.test(testValue).should.be.equal staticOutput
+    newObject.attr.should.be.equal testValue
 
   it 'should give the new Class a meta attribute containing at least his name',->
-    outClass = etho.x(minimalClassName) minimalClassPrototype
-    newObject = new outClass()
-    newObject.should.be.an.instanceof outClass
+    newObject.should.be.an.instanceof childClass
     newObject.should.have.property 'meta'
-    newObject.meta.name.should.be.equal 'TestMinimalClass'
+    newObject.meta.name.should.be.equal minimalClassName
 
   it 'should allow to specify an ancestor class',->
-    ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
-    childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
-    newObject = new childClass()
     newObject.prototype.should.have.property 'meta'
     newObject.meta.name.should.be.equal minimalClassName
     newObject.parent.meta.name.should.not.be.equal minimalClassName
 
   it 'should allow the new Class to call specific method from his ancestor',->
-    ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
-    childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
-    newObject = new childClass()
-    newObject.trans('test').should.be.equal 'child:father:test:child'
+    newObject.trans(testValue).should.be.equal "child:father:#{testValue}:child"
 
   it 'should allow to call a method from the ancestor class, even if it hasn\'t been re-implemented', ->
-    ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
-    childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
-    newObject = new childClass()
-    newObject.father('test').should.be.equal 'father:test'
+    newObject.father(testValue).should.be.equal "father:#{testValue}"
 
