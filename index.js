@@ -178,13 +178,15 @@
           if(typeof product.prototype[meth] === 'undefined'){
             product.prototype[meth] = function autoInheritedMethod(){
               console.log('PARENT METHOD', this);
-              return parentInvoke.apply(meth, _.toArray(arguments));
-            }
+              var args = _.toArray(arguments);
+              args.unshift(meth);
+              return parentInvoke.apply(this, args);
+            };
           }
         }
       }
       return product;
-    }
+    };
     product.prototype.meta = nameForNewClass;
 
 
