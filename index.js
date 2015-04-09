@@ -166,7 +166,7 @@
 
     var prototypeEnrichment = function _prototypeEnrichment(newMethods){
       for(var attr in newMethods){
-        if( newMethods.hasOwnProperty( attr ) && etho.isA('function', newMethods[attr])) {
+        if( newMethods.hasOwnProperty( attr ) ) {
           product.prototype[attr] = newMethods[attr];
         }
       }
