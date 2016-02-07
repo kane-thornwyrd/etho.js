@@ -8,7 +8,6 @@ load = (thing)=> inside thing, we require thing
 
 getARandomString = -> Math.random().toString(36).replace(/[^a-zA-Z]+/g, '')
 
-inside '_', we require 'underscore'
 inside 'sinonChai', we require 'sinon-chai'
 
 inside 'etho', we require '../index'
@@ -154,7 +153,7 @@ describe 'merge',->
       ]
     number : 1
 
-  refObj1 = _.clone obj1
+  refObj1 = etho.shallowCopy obj1
 
   obj2 =
     foo : false
