@@ -9,10 +9,15 @@ load = (thing)=> inside thing, we require thing
 getARandomString = -> Math.random().toString(36).replace(/[^a-zA-Z]+/g, '')
 
 inside '_', we require 'underscore'
+inside 'sinonChai', we require 'sinon-chai'
 
 inside 'etho', we require '../index'
 
+load 'sinon'
+
 load('chai').should()
+
+chai.use sinonChai
 
 
 describe 'ucfirst', ->
@@ -29,24 +34,100 @@ describe 'ucfirst', ->
   it 'should not change the case of the rest of the string', ->
     _testStr.substr(1).should.be.equal etho.ucfirst(_testStr).substr(1)
 
+describe 'getType', ->
+
+  it 'should give you the real native type of anything !', ->
+    spy = sinon.spy()
+    etho.getType([]).should.be.equal 'array'
+    etho.getType({}).should.be.equal 'object'
+    etho.getType(spy).should.be.equal 'function'
+    etho.getType('a').should.be.equal 'string'
+    etho.getType(1).should.be.equal 'number'
+    etho.getType(null).should.be.equal 'null'
+    etho.getType(undefined).should.be.equal 'undefined'
+    spy.should.not.have.been.called
+
+describe 'toArraySliced', ->
+
+  arrayToTest = [
+    1
+    2
+    3
+  ]
+
+  it 'should transform arguments to an array', ->
+    stub = ->
+      etho.toArraySliced arguments
+
+    stub.apply(this, arrayToTest).should.be.deep.equal arrayToTest
+
+  it 'should be able to slice the arguments from the start', ->
+    stub = ->
+      etho.toArraySliced arguments, 1
+
+    stub.apply(this, arrayToTest).should.be.deep.equal arrayToTest.slice(1)
+
+  it 'should be able to slice the arguments from both sides', ->
+    stub = ->
+      etho.toArraySliced arguments, 1, 2
+
+    stub.apply(this, arrayToTest).should.be.deep.equal arrayToTest.slice(1, 2)
+
+  it 'should always return an array', ->
+    etho.toArraySliced({"oko":23,foo:"bar",baz:null}).should.be.an 'array'
+
 
 describe 'isA',->
 
   it 'should be able to say if something is an Array',->
-    etho.isA('Array',[]).should.be.true
+    etho.isA('array',[]).should.be.true
 
   it 'should be able to say if something is an Object',->
-    etho.isA('Object',{}).should.be.true
+    etho.isA('object',{}).should.be.true
 
   it 'should be able to say if something is a String',->
-    etho.isA('String','').should.be.true
+    etho.isA('string','').should.be.true
 
   it 'should be able to say if something is a Number',->
-    etho.isA('Number',42).should.be.true
+    etho.isA('number',42).should.be.true
 
   it 'should be able to say if something is a Boolean',->
-    etho.isA('Boolean',true).should.be.true
+    etho.isA('boolean',true).should.be.true
 
+  it 'should be able to say if something is a Function',->
+    spy = sinon.spy()
+    etho.isA('function',spy).should.be.true
+    spy.should.not.have.been.called
+
+  it 'should be able to say if something is Undefined',->
+    etho.isA('undefined',undefined).should.be.true
+
+  it 'should be able to say if something is null',->
+    etho.isA('null',null).should.be.true
+
+describe 'shallowCopy', ->
+
+  obj1 =
+    foo : true
+    bar : getARandomString()
+    arr :
+      pirate : false
+      color  : getARandomString()
+      limb   : [
+        getARandomString()
+        getARandomString()
+      ]
+    number : 1
+
+  it 'shoud return a copy of an object', ->
+    etho.shallowCopy(obj1).should.be.deep.equal obj1
+
+  it 'should return a copy without any reference to the source object', ->
+    copy = etho.shallowCopy(obj1)
+    copy.foo = false
+    copy.bar = getARandomString()
+    copy.arr.limb.push 'okok'
+    obj1.foo.should.not.be.deep.equal copy
 
 describe 'forEach',->
   _testArr = [1,2,3,4,5,6,7,8,9]

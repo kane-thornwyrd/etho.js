@@ -8,20 +8,23 @@
     "email": "jean.cedric.t@gmail.com"
   },
   "scripts": {
+    "watch-tests": "watch -n 1 ''npm test''",
     "test": "istanbul cover --print both node_modules/mocha/bin/_mocha -- --compilers coffee:coffee-script/register --reporter spec test"
   },
   "contributors": [],
   "maintainers": [],
   "main": "index.js",
   "dependencies": {
-    "underscore": "1.*"
   },
   "devDependencies": {
+    "catw": "^1.0.1",
     "chai": "^2.0.0",
     "coffee-script": "^1.9.0",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.8",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0"
   },
   "homepage": "https://github.com/kane-thornwyrd/etho.js",
   "bugs": {
