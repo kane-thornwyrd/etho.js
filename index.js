@@ -105,110 +105,77 @@
     return _return;
   };
 
-  etho.x = function ethoX(nameForNewClass /*, parentClass , customConstructor*/){
-
-
-    var
-      baseMeta = {
-        name    : '',
-        version : '0.0.1-dev'
-      },
-      product = {},
-      _inheritance = false
-    ;
-
-    if(!etho.isA('string', nameForNewClass)){
-      nameForNewClass = etho.merge(baseMeta, nameForNewClass );
-    } else {
-      nameForNewClass = etho.merge(baseMeta, {
-        name : nameForNewClass
-      });
-    }
-
-    var args = etho.toArraySliced(arguments);
-
-    switch(args.length){
-      case 1:
-        _minimal.apply(this, args);
-      break;
-      case 2:
-        _customConstructor.apply(this, args);
-      break;
-      case 3:
-        _fullFledged.apply(this, args);
-      break;
-      default:
-        throw new Error('Wrong arguments in etho.x !');
-    }
-
-
-
-    function parentInvoke(method){
-      if(typeof this.parent[method] !== 'undefined'){
-        return this.parent[method].apply(this, etho.toArraySliced(arguments, 1));
+  etho.inherit = function ethoInherit(child, parent) {
+    for (var key in parent) {
+      if ({}.hasOwnProperty.call(parent, key)){
+        child[key] = parent[key];
       }
-      return null;
-    };
-
-
-    function _minimal(nameForNewClass){
-      product = etho.x.minimalConstructor;
-      product.prototype.parent = {};
-      product.prototype.constructor = etho.x.minimalConstructor;
-      product.prototype.parentMethod = parentInvoke;
-
     }
 
+    var wrapper = function wrapper() { this.constructor = child; }
 
-    function _customConstructor(nameForNewClass, customConstructor){
-      product = customConstructor;
-      product.prototype.parent =  {};
-      product.prototype.constructor = customConstructor;
-      product.prototype.parentMethod = parentInvoke;
-    }
-
-
-    function _fullFledged(nameForNewClass, parentClass, customConstructor){
-      product = customConstructor;
-      var _t = Object.create(parentClass);
-      product.prototype = _t;
-      product.prototype.parent = parentClass.prototype;
-      product.prototype.constructor = customConstructor;
-      product.prototype.parentMethod = parentInvoke;
-    }
-
-
-    var prototypeEnrichment = function _prototypeEnrichment(newMethods){
-      for(var attr in newMethods){
-        if( newMethods.hasOwnProperty( attr ) ) {
-          product.prototype[attr] = newMethods[attr];
-        }
-      }
-
-      var _functionFilter = function(val, k, obj){return etho.isA('function',val);};
-
-      for(var meth in product.prototype.parent){
-        if(product.prototype.parent.hasOwnProperty(meth)){
-          if(typeof product.prototype[meth] === 'undefined'){
-            product.prototype[meth] = function autoInheritedMethod(){
-              var args = etho.toArraySliced(arguments);
-              args.unshift(meth);
-              return parentInvoke.apply(this, args);
-            };
-          }
-        }
-      }
-      return product;
-    };
-    product.prototype.meta = nameForNewClass;
-
-
-
-
-    return prototypeEnrichment;
+    try{
+    wrapper.prototype = parent.prototype;
+    child.prototype = new wrapper();
+    child.__super__ = parent.prototype;
+  }catch(e){
+    console.log(e, child);
+  }
+    return child;
   };
 
-  etho.x.minimalConstructor = function ethoGenericConstructor(options){
+  etho.x = function ethoX(classname, customConstructor, parentClass){
+    var args = etho.toArraySliced(arguments, 1);
+
+    if(args.length === 0){
+      parentClass = function Lambda(){};
+    }
+
+    var CHILD = this[classname] = customConstructor || etho.x.minimalConstructor();
+
+
+    if(etho.isA('undefined', classname)){
+      throw 'classname is missing !';
+    }
+
+    if(etho.isA('undefined', parentClass)){
+      parentClass = function Lambda(){};
+    }
+
+    return function protoCreation(proto){
+
+      return (function(parent){
+        etho.inherit(CHILD, parent);
+
+        for(var attr in proto){
+          if( proto.hasOwnProperty( attr ) ) {
+            CHILD.prototype[attr] = proto[attr];
+          }
+        }
+
+        var autoSuper = function autoSuper(method){
+          if(
+            !etho.isA('undefined', CHILD.__super__) &&
+            !etho.isA('undefined', CHILD.__super__[method])
+          ){
+            return CHILD.__super__[method];
+          }
+          return undefined;
+        };
+
+        for(var oldattr in parent){
+          if( parent.hasOwnProperty( oldattr ) ) {
+            CHILD.prototype[oldattr] = autoSuper(oldattr);
+          }
+        }
+
+        return CHILD;
+
+      })(parentClass);
+    }
+  };
+
+  etho.x.minimalConstructor = function(){ return function ethoGenericConstructor(options){
     if(this.defaultOptions){
       this.options = etho.merge(this.defaultOptions, options);
     }else{
@@ -217,7 +184,7 @@
     if( this.init ){ this.init(); }
     if( this.listen ){ this.listen(); }
     return this;
-  }
+  };};
 
   return etho;
 }));

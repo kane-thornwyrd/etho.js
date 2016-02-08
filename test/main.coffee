@@ -203,40 +203,37 @@ describe 'x',->
 
   staticOutput = getARandomString()
   testValue = getARandomString()
-  ancestorClassName = 'TestAncestorClass'
   ancestorClassPrototype =
     foo: (@bar)->
-    baz: ()-> 'ancestor'
+    # baz: sinon.spy()
     father : (val)-> "father:#{val}"
 
-  minimalClassName = 'TestMinimalClass'
   minimalClassPrototype =
+    init: ->
+      @
     test : (@attr)-> staticOutput
     baz : ()-> 'child'
-    trans: (val)-> "child:#{@parentMethod 'father', val}:child"
+    trans: (val)->
+      console.log ChildClass.__super__.father val
+      val
 
-  ancestorClass = etho.x(ancestorClassName, ->) ancestorClassPrototype
-  childClass = etho.x(minimalClassName,ancestorClass, -> ) minimalClassPrototype
-  newObject = new childClass()
+  try
+    AncestorClass = etho.x('AncestorClass') ancestorClassPrototype
+    ChildClass = etho.x('ChildClass', undefined, AncestorClass) minimalClassPrototype
+    newObject = new ChildClass()
+  catch e
+    console.log e
+
 
   it 'should return a function that serve to populate the prototype of a new Class',->
-    newObject.test.should.be.a 'function'
-    newObject.test(testValue).should.be.equal staticOutput
-    newObject.attr.should.be.equal testValue
-
-  it 'should give the new Class a meta attribute containing at least his name',->
-    newObject.should.be.an.instanceof childClass
-    newObject.should.have.property 'meta'
-    newObject.meta.name.should.be.equal minimalClassName
+    etho.x('AnotherClass').should.be.a 'function'
 
   it 'should allow to specify an ancestor class',->
-    newObject.prototype.should.have.property 'meta'
-    newObject.meta.name.should.be.equal minimalClassName
-    newObject.parent.meta.name.should.not.be.equal minimalClassName
+    newObject.should.be.an.instanceof AncestorClass
 
   it 'should allow the new Class to call specific method from his ancestor',->
-    newObject.trans(testValue).should.be.equal "child:father:#{testValue}:child"
+    newObject.father.should.be.a 'function'
 
   it 'should allow to call a method from the ancestor class, even if it hasn\'t been re-implemented', ->
-    newObject.father(testValue).should.be.equal "father:#{testValue}"
+    newObject.father.should.be.a 'function'
 
