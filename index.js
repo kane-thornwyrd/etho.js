@@ -40,7 +40,6 @@
     switch(etho.getType(obj)){
       case 'array':
         return etho.toArraySliced(obj);
-      break;
       case 'object':
         for (var key in obj){
           if(
@@ -60,21 +59,17 @@
   };
 
   etho.forEach = function ethoForeach(obj, iterator, context) {
-    if (obj === null){ return;}
+
+    if (obj === null){ throw new Error('no object to iterate on !');}
+
     if(typeof context === 'undefined'){ context = this; }
-    if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
-      obj.forEach(iterator, context);
-    } else if (obj.length === +obj.length) {
-      for (var i = 0, l = obj.length; i < l; i++) {
-        if (iterator.call(context, obj[i], i, obj) === {}){ return;}
-      }
-    } else {
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          if (iterator.call(context, obj[key], key, obj) === {}){ return;}
-        }
+
+    for (var key in obj) {
+      if ({}.hasOwnProperty.call(obj, key)) {
+        iterator.call(context, obj[key], key, obj);
       }
     }
+
     return obj;
   };
 
@@ -90,12 +85,10 @@
           !etho.isA('function',_return[prop]) &&
           typeof _return[prop] === typeof src[prop]
         ){
-          switch(Object.prototype.toString.call(_return[prop])){
-            case '[object Object]':
+          switch(etho.getType(_return[prop])){
+            case 'object':
               _return[prop] = etho.merge(_return[prop], src[prop]);
             break;
-            case '[object Undefined]':
-              continue;
             default:
               _return[prop] = src[prop];
           }

@@ -118,7 +118,7 @@ describe 'shallowCopy', ->
       ]
     number : 1
 
-  it 'shoud return a copy of an object', ->
+  it 'shoud return a copy of an Object', ->
     etho.shallowCopy(obj1).should.be.deep.equal obj1
 
   it 'should return a copy without any reference to the source object', ->
@@ -127,6 +127,18 @@ describe 'shallowCopy', ->
     copy.bar = getARandomString()
     copy.arr.limb.push 'okok'
     obj1.foo.should.not.be.deep.equal copy
+
+  it 'should be able to return a copy of an Array', ->
+    limbs = obj1.arr.limb
+    copy  = etho.shallowCopy(limbs)
+    rsgout = getARandomString();
+    limbs.push(rsgout);
+    copy.indexOf(rsgout).should.be.equal -1
+
+  it 'should throw an Error if the wrong type of arguments are passed', ->
+    try
+      etho.shallowCopy('okoko').should.throw 'Wrong Type.'
+
 
 describe 'forEach',->
   _testArr = [1,2,3,4,5,6,7,8,9]
@@ -137,6 +149,11 @@ describe 'forEach',->
     etho.forEach _testArr, (val, index, list)->
       _result += val
     _result.should.be.equal _expectedResult
+
+  it 'should throw an error if no array or object is passed to it', ->
+    try
+      etho.forEach().should.throw 'no object to iterate on !'
+
 
 
 describe 'merge',->
