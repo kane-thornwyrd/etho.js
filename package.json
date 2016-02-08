@@ -9,6 +9,7 @@
   },
   "scripts": {
     "watch-tests": "watch -n 1 ''npm test''",
+    "watch-doc": "watch -n 1 ''docco -o doc index.js'' & xdg-open doc/index.html",
     "test": "istanbul cover --print both node_modules/mocha/bin/_mocha -- --compilers coffee:coffee-script/register --reporter spec test"
   },
   "contributors": [],

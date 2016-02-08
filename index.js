@@ -1,27 +1,39 @@
+// ## UMD.js wrapper.
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
+    // AMD.
     define([], function () {
         return factory();
     });
+    // Commonjs.
   } else if(typeof exports !== 'undefined'){
     exports = module.exports = factory();
   } else {
-    // Browser globals
+    // Browser globals.
     factory();
   }
 }(this, function () {
 
+  // # etho.js
+
   var etho = {};
 
+  // ### ucfirst
+  // Uppercase the first letter of the string passed as argument.
   etho.ucfirst = function ethoUcfirst(str){
     return str.substr(0,1).toUpperCase() + str.substr(1);
   };
 
+
+
+  // ### getType
+  // Return the *true* type of anything as a string.
   etho.getType = function ethoGetType(thing){
     return Object.prototype.toString.call(thing).match(/^\[object\s+(\w+)\]$/)[1].toLowerCase();
   };
 
+  // ### toArraySliced
+  // Try to transform anything into an array and slice it.
   etho.toArraySliced = function ethoToArraySliced(obj, sliceStart, sliceEnd){
     sliceStart = sliceStart || 0;
     if(etho.isA('undefined', sliceEnd)){
