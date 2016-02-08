@@ -114,13 +114,9 @@
 
     var wrapper = function wrapper() { this.constructor = child; }
 
-    try{
     wrapper.prototype = parent.prototype;
     child.prototype = new wrapper();
     child.__super__ = parent.prototype;
-  }catch(e){
-    console.log(e, child);
-  }
     return child;
   };
 
@@ -135,7 +131,7 @@
 
 
     if(etho.isA('undefined', classname)){
-      throw 'classname is missing !';
+      throw new Error('classname is missing !');
     }
 
     if(etho.isA('undefined', parentClass)){
@@ -156,11 +152,10 @@
         var autoSuper = function autoSuper(method){
           if(
             !etho.isA('undefined', CHILD.__super__) &&
-            !etho.isA('undefined', CHILD.__super__[method])
+            etho.isA('undefined', CHILD.__super__[method])
           ){
             return CHILD.__super__[method];
           }
-          return undefined;
         };
 
         for(var oldattr in parent){

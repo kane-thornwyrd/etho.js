@@ -204,8 +204,15 @@ describe 'x',->
   staticOutput = getARandomString()
   testValue = getARandomString()
   ancestorClassPrototype =
+    defaultOptions:
+      test: false
     foo: (@bar)->
-    # baz: sinon.spy()
+    baz: sinon.spy()
+    father : (val)-> "father:#{val}"
+
+  ancestorClassPrototype2 =
+    foo: (@bar)->
+    baz: sinon.spy()
     father : (val)-> "father:#{val}"
 
   minimalClassPrototype =
@@ -214,16 +221,37 @@ describe 'x',->
     test : (@attr)-> staticOutput
     baz : ()-> 'child'
     trans: (val)->
-      console.log ChildClass.__super__.father val
-      val
+      @baz() + '|' + ChildClass.__super__.father(val) + '|' + @baz()
+
+  minimalClassPrototype2 =
+    defaultOptions:
+      test: true
+    test : (@attr)-> staticOutput
+    baz : ()-> 'child'
+    trans: (val)->
+      @baz() + '|' + ChildClass.__super__.father(val) + '|' + @baz()
 
   try
     AncestorClass = etho.x('AncestorClass') ancestorClassPrototype
+    AncestorClass2 = etho.x('AncestorClass2') ancestorClassPrototype2
     ChildClass = etho.x('ChildClass', undefined, AncestorClass) minimalClassPrototype
+    ChildClass2 = etho.x('ChildClass2', undefined) minimalClassPrototype2
     newObject = new ChildClass()
   catch e
     console.log e
 
+  it 'should take at least the classname as argument', ->
+    try
+      etho.x().should.throw 'classname is missing !'
+
+  it 'should provide a mecanism to have default options overriden at instanciation type sensitive', ->
+    (new AncestorClass({test:true})).options.test.should.be.ok
+
+  it 'should override the default options in type sensitive manner only', ->
+    (new AncestorClass({test:2})).options.test.should.not.be.equal 2
+
+  it 'should save the constructor parameter as options if no defaultOptions are provided', ->
+    (new AncestorClass2({test:2})).options.test.should.be.equal 2
 
   it 'should return a function that serve to populate the prototype of a new Class',->
     etho.x('AnotherClass').should.be.a 'function'
@@ -232,8 +260,13 @@ describe 'x',->
     newObject.should.be.an.instanceof AncestorClass
 
   it 'should allow the new Class to call specific method from his ancestor',->
-    newObject.father.should.be.a 'function'
+    newObject.trans('hello').should.be.equal 'child|father:hello|child'
 
   it 'should allow to call a method from the ancestor class, even if it hasn\'t been re-implemented', ->
     newObject.father.should.be.a 'function'
 
+  it 'should not call a parent method during the inheritance process', ->
+    ChildClass.__super__.baz.should.not.have.been.called
+
+  it 'should provide a Lambda parent when no parent is provided', ->
+    AncestorClass.__super__.should.be.an.instanceof Object
