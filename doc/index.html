@@ -6,7 +6,6 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" media="all" href="docco.css" />
-  
 </head>
 <body>
   <div id="container">
@@ -84,21 +83,28 @@
             
               
                 <li>
-                  <a href="#section-13">inherit</a>
+                  <a href="#section-13">deepAccess</a>
                 </li>
               
             
             
               
                 <li>
-                  <a href="#section-14">x</a>
+                  <a href="#section-14">inherit</a>
                 </li>
               
             
             
               
                 <li>
-                  <a href="#section-15">x.minimalConstructor</a>
+                  <a href="#section-15">x</a>
+                </li>
+              
+            
+            
+              
+                <li>
+                  <a href="#section-16">x.minimalConstructor</a>
                 </li>
               
             
@@ -111,6 +117,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h1 id="etho-js">etho.js</h1>
 <h2 id="umd-js-wrapper-">UMD.js wrapper.</h2>
@@ -127,6 +134,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <p>AMD.</p>
 
@@ -145,6 +153,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <p>Commonjs.</p>
 
@@ -161,6 +170,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <p>Browser globals.</p>
 
@@ -179,6 +189,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <p>declaring the namespace.</p>
 
@@ -194,6 +205,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="ucfirst">ucfirst</h3>
 <p>Return the string passed as argument with the first letter uppercased.</p>
@@ -215,6 +227,7 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="gettype">getType</h3>
 <p>Return the <em>true</em> type of anything as a string.</p>
@@ -247,6 +260,7 @@ etho.getType(<span class="hljs-literal">undefined</span>);
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="toarraysliced">toArraySliced</h3>
 <p>Try to transform anything into an array and slice it.</p>
@@ -298,6 +312,7 @@ test(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'baz'</sp
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="isa">isA</h3>
 <p>Check the type of anything against the supposed type as a string.</p>
@@ -322,6 +337,7 @@ etho.isA(<span class="hljs-string">'string'</span>, {})
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="shallowcopy">shallowCopy</h3>
 <p><strong>Recursively deep copy</strong> an <code>array</code> or an <code>object</code> without any reference left !</p>
@@ -378,6 +394,7 @@ bar.arr.fakelimb.length
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="foreach">forEach</h3>
 <p>Run an iterator against each entries of an array or an object.</p>
@@ -411,6 +428,7 @@ etho.forEach(foo, <span class="hljs-function"><span class="hljs-keyword">functio
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="merge">merge</h3>
 <p>Recursively an type-checked merge things. Useful to enforce defaultOptions
@@ -473,6 +491,48 @@ the nexts !</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
+              </div>
+              <h3 id="deepaccess">deepAccess</h3>
+<p>With this function you can, using a string path, inside imbricated objects:</p>
+<ul>
+<li>Retrieve a value</li>
+<li>Alter a value</li>
+<li>Execute a method</li>
+</ul>
+<p><strong>Exemple</strong>:</p>
+<pre><code><span class="hljs-keyword">var</span> target = {
+ foo: {
+   bar: {
+     baz: [
+       <span class="hljs-string">'madness'</span>
+     ]
+   }
+ }
+};
+
+deepAccess(target, <span class="hljs-string">'foo.bar.baz'</span>).push(<span class="hljs-string">'sparta'</span>);
+<span class="hljs-comment">//target → {foo:{bar:{baz:['madness', 'sparta']}}}</span>
+</code></pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  etho.deepAccess = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ethoDeepAccess</span>(<span class="hljs-params">obj, path</span>)</span>{
+    <span class="hljs-keyword">if</span>(etho.isA(<span class="hljs-string">'undefined'</span>,obj)) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'no object to navigate inside !'</span>);
+    <span class="hljs-keyword">if</span>(etho.isA(<span class="hljs-string">'string'</span>,path)){
+      path = path.replace(<span class="hljs-regexp">/\[/g</span>, <span class="hljs-string">'.'</span>).replace(<span class="hljs-regexp">/\]/g</span>, <span class="hljs-string">''</span>).split(<span class="hljs-string">'.'</span>);
+    }
+    <span class="hljs-keyword">return</span> path.length === <span class="hljs-number">1</span> ? obj[path.shift()] : etho.deepAccess(obj[path.shift()], path);
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="inherit">inherit</h3>
 <p><strong>Exemple</strong>:</p>
@@ -498,11 +558,12 @@ the nexts !</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="x">x</h3>
 <p><strong>Exemple</strong>:</p>
@@ -563,11 +624,12 @@ the nexts !</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <h3 id="x-minimalconstructor">x.minimalConstructor</h3>
 <p><strong>Exemple</strong>:</p>

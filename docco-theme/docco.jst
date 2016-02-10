@@ -54,6 +54,7 @@
               <% heading = section.docsHtml.match(/^\s*<(h\d)>/) %>
               <div class="pilwrap <%= heading ? 'for-' + heading[1] : '' %>">
                 <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
+                <a class="pilcrow toc" href="#toc">&#x21A5;</a>
               </div>
               <%= section.docsHtml %>
             </div>

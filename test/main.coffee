@@ -236,7 +236,7 @@ describe 'deepAccess',->
     arr[0] = stringTest
     obj.foo.bar.baz[0].should.be.equal stringTest
 
-  it 'should allow to a method from imbricated objects using a string path',->
+  it 'should allow to execute a method from imbricated objects using a string path',->
     startLength = obj.foo.bar.baz.length
     etho.deepAccess(obj, 'foo.bar.baz').push(getARandomString())
     obj.foo.bar.baz.length.should.be.above startLength

@@ -249,6 +249,30 @@
     return _return;
   };
 
+
+  // ### deepAccess
+  //
+  //With this function you can, using a string path, inside imbricated objects:
+  //* Retrieve a value
+  //* Alter a value
+  //* Execute a method
+  //
+  // **Exemple**:
+  // ```
+  //var target = {
+  //  foo: {
+  //    bar: {
+  //      baz: [
+  //        'madness'
+  //      ]
+  //    }
+  //  }
+  //};
+  //
+  //deepAccess(target, 'foo.bar.baz').push('sparta');
+  ////target → {foo:{bar:{baz:['madness', 'sparta']}}}
+  //
+  // ```
   etho.deepAccess = function ethoDeepAccess(obj, path){
     if(etho.isA('undefined',obj)) throw new Error('no object to navigate inside !');
     if(etho.isA('string',path)){

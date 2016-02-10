@@ -262,13 +262,21 @@ ul.sections > li > div {
   .pilcrow {
     font: 12px Arial;
     text-decoration: none;
+    text-align:center;
+    line-height: 24px;
     color: #454545;
-    position: absolute;
-    top: 3px; left: -20px;
-    padding: 1px 2px;
+    width: 24px;height: 24px;
     opacity: 0;
     -webkit-transition: opacity 0.2s linear;
+    display: inline-block;
+    margin: 0;
+    margin-top: 1em;
   }
+
+  .pilcrow.toc{
+    left: -2em;
+  }
+
     .for-h1 .pilcrow {
       top: 47px;
     }
