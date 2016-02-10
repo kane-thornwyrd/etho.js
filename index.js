@@ -249,6 +249,13 @@
     return _return;
   };
 
+  etho.deepAccess = function ethoDeepAccess(obj, path){
+    if(etho.isA('undefined',obj)) throw new Error('no object to navigate inside !');
+    if(etho.isA('string',path)){
+      path = path.replace(/\[/g, '.').replace(/\]/g, '').split('.');
+    }
+    return path.length === 1 ? obj[path.shift()] : etho.deepAccess(obj[path.shift()], path);
+  };
 
   // ### inherit
   //

@@ -18,6 +18,8 @@ load('chai').should()
 
 chai.use sinonChai
 
+describe 'UMD header', ->
+  define = sinon.spy()
 
 describe 'ucfirst', ->
 
@@ -215,6 +217,41 @@ describe 'merge',->
     output = etho.merge(obj1, obj2)
     output.should.have.deep.property('arr.limb').equal obj2.arr.limb
 
+describe 'deepAccess',->
+
+  obj =
+    foo :
+      bar :
+        baz : [
+          getARandomString(),
+          getARandomString()
+        ]
+
+  it 'should allow to retrieve a value inside imbricated objects using a string path',->
+    etho.deepAccess(obj, 'foo.bar.baz[0]').should.be.equal obj.foo.bar.baz[0]
+
+  it 'should allow to alter a value inside imbricated objects using a string path',->
+    stringTest = getARandomString()
+    arr = etho.deepAccess(obj, 'foo.bar.baz')
+    arr[0] = stringTest
+    obj.foo.bar.baz[0].should.be.equal stringTest
+
+  it 'should allow to a method from imbricated objects using a string path',->
+    startLength = obj.foo.bar.baz.length
+    etho.deepAccess(obj, 'foo.bar.baz').push(getARandomString())
+    obj.foo.bar.baz.length.should.be.above startLength
+
+  it 'should throw an error if no array or object is passed to it', ->
+    try
+      etho.deepAccess().should.throw 'no object to navigate inside !'
+
+  it 'should throw an error if no path as string is passed to it', ->
+    try
+      etho.deepAccess(obj).should.throw Error
+
+  it 'should throw an error if a wrong path is passed to it', ->
+    try
+      etho.deepAccess(obj, 'Lorem.ipsum').should.throw Error
 
 describe 'x',->
 
