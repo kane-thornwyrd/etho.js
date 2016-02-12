@@ -310,22 +310,16 @@
   // ```
   // ```
   etho.x = function ethoX(classname, customConstructor, parentClass){
-    var args = etho.toArraySliced(arguments, 1);
-
-    if(args.length === 0){
-      parentClass = function Lambda(){};
-    }
-
-    var CHILD = this[classname] = customConstructor || etho.x.minimalConstructor();
-
-
     if(etho.isA('undefined', classname)){
       throw new Error('classname is missing !');
     }
+    var args = etho.toArraySliced(arguments, 1);
 
     if(etho.isA('undefined', parentClass)){
       parentClass = function Lambda(){};
     }
+
+    var CHILD = this[classname] = customConstructor || etho.x.minimalConstructor();
 
     return function protoCreation(proto){
 
@@ -337,6 +331,7 @@
             CHILD.prototype[attr] = proto[attr];
           }
         }
+        CHILD.prototype.__type__ = classname;
 
         var autoSuper = function autoSuper(method){
           if(

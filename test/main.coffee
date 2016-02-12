@@ -324,3 +324,6 @@ describe 'x',->
 
   it 'should provide a Lambda parent when no parent is provided', ->
     AncestorClass.__super__.should.be.an.instanceof Object
+
+  it 'should provide a `__type__` attribute containing the classname', ->
+    newObject.__type__.should.be.equal ChildClass.prototype.__type__

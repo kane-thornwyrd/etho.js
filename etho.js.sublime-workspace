@@ -1,0 +1,569 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"margin",
+				"margin"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"str",
+				"stringTest"
+			],
+			[
+				"deep",
+				"deepAccess"
+			],
+			[
+				"array",
+				"Array"
+			],
+			[
+				"default",
+				"defaultOptions"
+			],
+			[
+				"te",
+				"test"
+			],
+			[
+				"ty",
+				"typeof"
+			],
+			[
+				"un",
+				"undefined"
+			],
+			[
+				"in",
+				"inherit"
+			],
+			[
+				"arg",
+				"args"
+			],
+			[
+				"ance",
+				"ancestorClass"
+			],
+			[
+				"paren",
+				"parentClass"
+			],
+			[
+				"pare",
+				"parentInvoke"
+			],
+			[
+				"chil",
+				"childClass"
+			],
+			[
+				"sino",
+				"sinonChai"
+			],
+			[
+				"slice",
+				"sliceEnd"
+			],
+			[
+				"sli",
+				"sliceEnd"
+			],
+			[
+				"re",
+				"req	require"
+			],
+			[
+				"for",
+				"for	for (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"cart",
+				"cartAmount"
+			],
+			[
+				"entry",
+				"entryToSave"
+			],
+			[
+				"app",
+				"appRoot"
+			],
+			[
+				"li",
+				"libraryView"
+			],
+			[
+				"model",
+				"modelsRendered"
+			],
+			[
+				"c",
+				"cl	console.log"
+			],
+			[
+				"st",
+				"startegies"
+			],
+			[
+				"comm",
+				"commonJsStrictGlobal"
+			],
+			[
+				"is",
+				"isCommonJs"
+			],
+			[
+				"meth",
+				"methodsAvailables"
+			],
+			[
+				"com",
+				"communication"
+			],
+			[
+				"tes",
+				"test-src"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.js",
+			"settings":
+			{
+				"buffer_size": 8625,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/main.coffee",
+			"settings":
+			{
+				"buffer_size": 9643,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "in",
+		"selected_items":
+		[
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"instla",
+				"Package Control: Install Package"
+			],
+			[
+				"instl",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/kane-thornwyrd/Projects/etho.js",
+		"/home/kane-thornwyrd/Projects/etho.js/docco-theme",
+		"/home/kane-thornwyrd/Projects/etho.js/test"
+	],
+	"file_history":
+	[
+		"/home/kane-thornwyrd/Projects/etho.js/docco-theme/docco.jst",
+		"/home/kane-thornwyrd/Projects/etho.js/docco-theme/docco.css",
+		"/home/kane-thornwyrd/.ssh/id_rsa.pub",
+		"/home/kane-thornwyrd/.ghf/bin/git-hub-clone",
+		"/home/kane-thornwyrd/.ghf/bin/git-hub-feature",
+		"/home/kane-thornwyrd/Projects/etho.js/package.json",
+		"/home/kane-thornwyrd/Projects/etho.js/docco.jst",
+		"/home/kane-thornwyrd/Projects/etho.js/node_modules/docco/resources/classic/docco.jst",
+		"/home/kane-thornwyrd/Projects/etho.js/test/main.coffee",
+		"/home/kane-thornwyrd/Projects/etho.js/yuidoc.json",
+		"/home/kane-thornwyrd/Projects/etho.js/.gitignore",
+		"/home/kane-thornwyrd/Projects/etho.js/.travis.yml",
+		"/home/kane-thornwyrd/Projects/henriIII/app/stores/dummy-store.js",
+		"/home/kane-thornwyrd/Projects/henriIII/app/stores/store-interface.js",
+		"/home/kane-thornwyrd/Projects/henriIII/app/Dispatcher.js",
+		"/home/kane-thornwyrd/Projects/henriIII/app/main.js",
+		"/home/kane-thornwyrd/Projects/henriIII/app/index.jade",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp-tasks/templates.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp-tasks/watch.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp-tasks/js/js-compile.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulpfile.js",
+		"/home/kane-thornwyrd/Projects/henriIII/app/EventEmitter.js",
+		"/home/kane-thornwyrd/Projects/henriIII/package.json",
+		"/home/kane-thornwyrd/Projects/henriIII/public/index.html",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp-tasks/templating/static.js",
+		"/home/kane-thornwyrd/Projects/henriIII/public/js/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/webpack.config.js",
+		"/home/kane-thornwyrd/Projects/henriIII/doc/README.md",
+		"/home/kane-thornwyrd/Projects/henriIII/app/AppComponent.js",
+		"/home/kane-thornwyrd/Projects/henriIII/app/app.js",
+		"/home/kane-thornwyrd/Projects/henriIII/dist/main.js",
+		"/home/kane-thornwyrd/Projects/henriIII/dist/index.html",
+		"/home/kane-thornwyrd/Projects/henriIII/build/index.html",
+		"/home/kane-thornwyrd/Projects/henriIII/build/main.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/app.js",
+		"/home/kane-thornwyrd/Projects/henriIII/.travis.yml",
+		"/home/kane-thornwyrd/Projects/henriIII/.gitignore",
+		"/home/kane-thornwyrd/.bash_alias",
+		"/home/kane-thornwyrd/.gitconfig",
+		"/home/kane-thornwyrd/.bash_scripts/gh-pages.sh",
+		"/home/kane-thornwyrd/Projects/henriIII/gulpconf.json",
+		"/home/kane-thornwyrd/Projects/henriIII/src/3-views/BookStamp.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/4-routes/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/0-common/0-master.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/index.jade",
+		"/home/kane-thornwyrd/Projects/henriIII/src/2-collections/cart.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/4-routes/library.js",
+		"/var/log/vboxadd-install.log",
+		"/run/media/kane-thornwyrd/VBOXADDITIONS_5.0.14_105127/autorun.sh",
+		"/home/kane-thornwyrd/Projects/henriIII/src/1-models/Book.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/1-models/0-CartEntry.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/4-routes/AAAaaa-prep.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/2-collections/library.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/0-common/Collection.js",
+		"/home/kane-thornwyrd/Projects/henriIII/bin/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/0-common/CollectionView.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/3-views/library.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/4-routes/zzzZZZ-init.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/zzzFooter.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/src/0-common/ModelView.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/3-views/bookStamp.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/0-common/View.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/1-models/book.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks/UMD.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks/javascript.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/0-common/Model.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/models/book.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/___-common/Model.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/zzz-routes/___-prep.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/zzz-routes/zzz-init.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/zzz-routes/book.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/_common/Model.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/gateways/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/_main.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/communication.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks/buildTestPage.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks/copyToTest.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/communications/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks/nextTick.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test/tests.js",
+		"/home/kane-thornwyrd/Projects/henriIII/README.md",
+		"/home/kane-thornwyrd/Projects/henriIII/bin/bin/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/bin/src.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/footer.js",
+		"/home/kane-thornwyrd/Projects/henriIII/bin/footer.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/utils.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/src/communications/_index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/head.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/app/communications/_index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/app/head.js",
+		"/home/kane-thornwyrd/Projects/henriIII/src/app/footer.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/comSat.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/src/app/index.js",
+		"/home/kane-thornwyrd/Projects/henriIII/test-src/main.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/test/main.coffee",
+		"/home/kane-thornwyrd/Projects/henriIII/documentation/index.html",
+		"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks/documentation.js",
+		"/home/kane-thornwyrd/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/kane-thornwyrd/Projects/underscore.multiplexer/test/index.html",
+		"/home/kane-thornwyrd/Projects/henriIII/.markedrc",
+		"/home/kane-thornwyrd/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"/home/kane-thornwyrd/Projects/henriIII/src",
+			"/home/kane-thornwyrd/Projects/henriIII/gulp_tasks"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"50%",
+			"Foreach",
+			"forEach",
+			"{\n",
+			"this[classname]",
+			"_inheritance",
+			"_functionFilter",
+			"nameForNewClass",
+			"inherit",
+			"_.",
+			"_",
+			"undersco",
+			"_.clon",
+			"func",
+			"type",
+			"slice.ca",
+			"Ucfirst",
+			"ucfirst",
+			"_.",
+			"forEach",
+			".merge",
+			"_.",
+			"_(",
+			"_",
+			"create",
+			"consol",
+			"StoreInterface",
+			"require\\('([^']+)",
+			">",
+			"<",
+			"f0f0f0",
+			"cart.models[0]",
+			"ookStampView",
+			"ship",
+			"ul",
+			"article",
+			"modelsPlaceHolder",
+			"modelsRendered",
+			"library",
+			"div",
+			"localStorage",
+			"ookModel",
+			"communications",
+			"Communications",
+			"startegies",
+			"henristore.communications.",
+			"get",
+			"<",
+			" %>",
+			"<%= ",
+			"gPlugins",
+			"lPlugs",
+			"concat",
+			"rename",
+			"fakeStrategy",
+			"communication",
+			"gPlugins.gutil",
+			"jsName"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			">",
+			"<"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8625,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6916,
+								6916
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4280.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "test/main.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6521,
+								6521
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3509.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 135.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "etho.js.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 238.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
